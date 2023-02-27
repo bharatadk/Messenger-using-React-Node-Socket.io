@@ -1,0 +1,54 @@
+import React, { useRef } from "react";
+import classes from "./message.module.css";
+import { format } from "timeago.js";
+import { useEffect } from "react";
+
+const Message = ({ own, message }) => {
+    const ref = useRef();
+    const Woman =
+        "https://thumbs.dreamstime.com/b/close-up-photo-beautiful-funky-childish-her-dark-skin-lady-evil-person-making-loser-symbol-forehead-impolite-indicate-finger-145381980.jpg";
+
+    useEffect(() => {
+        ref.current?.scrollIntoView({ behavior: "smooth" });
+    }, [message]);
+
+    return (
+        <>
+            {!own && (
+                <div ref={ref} className={classes.container}>
+                    <div className={classes.wrapper}>
+                        <img src={Woman} className={classes.personImg} />
+                        <div className={classes.messageAndTimeAgo}>
+                            <div className={classes.text}>
+                                {message.messageText}
+                            </div>
+                            <span className={classes.timeAgo}>
+                                {format(message.createdAt)}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            )}
+            {own && (
+                <div
+                    ref={ref}
+                    className={`${classes.container} ${classes.own}`}
+                >
+                    <div className={classes.wrapper}>
+                        <div className={classes.messageAndTimeAgo}>
+                            <div className={classes.text}>
+                                {message.messageText}
+                            </div>
+                            <span className={classes.timeAgo}>
+                                {format(message.createdAt)}
+                            </span>
+                        </div>
+                        <img src={Woman} className={classes.personImg} />
+                    </div>
+                </div>
+            )}
+        </>
+    );
+};
+
+export default Message;
